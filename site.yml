@@ -1,0 +1,4 @@
+- hosts: ansible-test
+  sudo: yes
+  roles:
+    - gitlab

@@ -1,0 +1,22 @@
+# - name: install openssh-server
+#   yum: name=openssh-server state=latest
+- name: install openssh-server
+  command: yum install openssh-server postfix cronie
+# - name: postfix - enabled
+#   service: name=postfix state=running enabled=yes
+- name: service postfix start
+  command: service postfix start
+- name: chkconfig postfix on
+  command: chkconfig postfix on
+- name: lokkit -s http -s ssh
+  command: lokkit -s http -s ssh
+- name: install gitlab
+  command: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+- name: install gitlab
+  yum: name=gitlab-ce state=latest
+- name: reconfigure
+  command: gitlab-ctl reconfigure
+- name: reconfigure
+  command: chmod 600 /etc/gitlab/gitlab.rb
+- name: reconfigure
+  command: gitlab-ctl reconfigure

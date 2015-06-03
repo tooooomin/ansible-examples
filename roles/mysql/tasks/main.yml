@@ -1,0 +1,10 @@
+- name: get jenkins repo
+  get_url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
+- name: set jenkins repo
+  command: rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+- name: install jenkins
+  yum: name=jenkins state=latest
+- name: change jenkins start option
+  command: sed -i -e 's/JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true"/JENKINS_JAVA_OPTIONS="-Xms512M -Xmx512M -Djava.awt.headless=true"/' /etc/sysconfig/jenkins
+- name: start jenkins service
+  service: name=jenkins state=started
